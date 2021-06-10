@@ -38,12 +38,6 @@ conda install cudatoolkit=9.0 cudnn=7.6.5
 pip install -r requirements.txt 
 ```
 
-
-
-```shell
-pip install -r requirements.txt
-```
-
 **环境建议用 torch==1.1.0！！！用其它的 torch 1.7.1 效果会更差，原因暂且不明**
 
 
