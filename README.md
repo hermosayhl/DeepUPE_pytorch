@@ -105,6 +105,20 @@ opt.checkpoints_file = './checkpoints/simple_batch_16/epoch_48_psnr_23.677.pth'
 
 
 
+
+
+### 2.3 torch == 1.1.0
+
+torch 版本的问题。强烈建议 torch==1.1.0；如果使用 torch ==1.7.1，得到的图像会有以下结果：
+
+![image-20210610171324777](image_for_markdown/image-20210610171324777.png)
+
+![image-20210610171352313](image_for_markdown/image-20210610171352313.png)
+
+无论是低分辨率还是高分辨率，使用 torch==1.7.1 得到的结果，在图像四周边缘有模糊，光圈现象。本人猜测这应该是 torch 不同版本的 grid_sample 函数不同。训练好的模型在 torch 1.1.0 环境下能正常工作
+
+
+
 ## 3. Datasets
 
 使用的是 [MIT-Adobe FiveK](https://data.csail.mit.edu/graphics/fivek/) 数据集的 **ExpertC** 图像对。本实验采用的 512px 分辨率（长宽最大 512，按比例下采样）的图像，下载链接如下：
