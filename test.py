@@ -42,8 +42,9 @@ opt.low_size = 256
 opt.full_size = 512
 opt.use_cuda = True
 opt.eps_value = 1e-4
+opt.config_file = "./checkpoints/simple_batch_16/options.pkl"
 opt.dataset_dir = "/home/cgy/Chang/image_enhancement/datasets/fiveK"
-opt.checkpoints_file = './checkpoints/simple_batch_32/epoch_100_psnr_23.721.pth'
+opt.checkpoints_file = './checkpoints/simple_batch_16/epoch_48_psnr_23.677.pth'
 for l, r in vars(opt).items(): print(l, " : ", r)
 assert os.path.exists(opt.checkpoints_file), "checkpoints_file {} doesn't exists !".format(opt.checkpoints_file)
 assert os.path.exists(opt.dataset_dir), "dataset folder {} doesn't exists !".format(opt.dataset_dir)
@@ -67,9 +68,14 @@ pre_transform = lambda x: torch.from_numpy(x.astype('float32')).div(255).permute
 post_transform = lambda x: x.detach().squeeze(0).permute(1, 2, 0).cpu().mul(255).numpy().astype('uint8')
 
 
-opt.dataset_ratios = [0.9, 0.1]
-import pipeline
-images_list = pipeline.get_images(opt)[-1]
+
+with open(opt.config_file, 'rb') as reader:
+	config = pickle.load(reader)
+
+images_list = config['valid_images_list']
+# opt.dataset_ratios = [0.9, 0.1]
+# import pipeline
+# images_list = pipeline.get_images(opt)[-1]
 print('{} images are to be processed !'.format(len(images_list)))
 
 

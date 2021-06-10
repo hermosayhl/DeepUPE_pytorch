@@ -16,7 +16,7 @@
 
 说下代码，官方代码 **抄袭** 的 tensorflow 1.1.0 实在是丑，晦涩难懂，不好改，及时联系拿到了 `train.py` 也一路问题......因此，我直接按照官方拼凑的思路，**抄袭** 这位老哥的 [hdrnet-pytorch](https://github.com/creotiv/hdrnet-pytorch)  的 HDRNet ，用来求解光照估计图，**然后我只是写了下那几个损失和训练过程**，代码都是用 pytorch 实现的，没有太大的平台限制，linux 跟 windows 都可以跑，不用 make, cmake 等等。
 
-最终在  [MIT-Adobe FiveK](https://data.csail.mit.edu/graphics/fivek/)  数据集上，512px 分辨率，4500 对图像做训练 train ，剩下 500 对做验证 valid，PSNR 达到了 **23.488db**，SSIM 达到了 **0.8581**。跟官方代码，在同样数据上得到的结果差不多，psnr 在 23.5db 左右，至于论文里写的指标 30db......纯属扯淡。 
+最终在  [MIT-Adobe FiveK](https://data.csail.mit.edu/graphics/fivek/)  数据集上，512px 分辨率，4500 对图像做训练 train ，剩下 500 对做验证 valid，PSNR 达到了 **23.547db**，SSIM 达到了 **0.8578**。跟官方代码，在同样数据上得到的结果差不多，psnr 在 23.5db 左右，至于论文里写的指标 30db......纯属扯淡。 
 
 
 
@@ -52,7 +52,7 @@ opt.images_dir = "./sample_imgs"
 # 一个文件夹, 放输出的增强图像结果, images folder for save results
 opt.result_dir = './sample_results'
 # 训练好的网络权重路径
-opt.checkpoints_file = './checkpoints/simple_batch_32/epoch_100_psnr_23.721.pth'
+opt.checkpoints_file = './checkpoints/simple_batch_16/epoch_48_psnr_23.677.pth'
 ```
 
 ### 2.1 samples
@@ -159,10 +159,12 @@ python test.py
 如果是使用 fivek 数据集验证，在 `test.py` 的 40 - 50 行中修改参数，主要几个输入参数如下
 
 ```python
+# 配置文件, 这里保存了验证集的列表
+opt.config_file = "./checkpoints/simple_batch_16/options.pkl"
 # fiveK 数据集, 目录下两个子目录 input、expertC_gt, 分别存放低光照图和高质量正常曝光图
 opt.dataset_dir = "/home/cgy/Chang/image_enhancement/datasets/fiveK"
 # 训练好的网络权重路径
-opt.checkpoints_file = './checkpoints/simple_batch_32/epoch_100_psnr_23.721.pth'
+opt.checkpoints_file = './checkpoints/simple_batch_16/epoch_48_psnr_23.677.pth'
 ```
 
 还要注意一点，训练过程中使用的验证数据都是 resize 成 512x512 的，因为要 batch 训练，**但这里的验证数据都是保持长宽比例的低分辨率图（类似 341x512、314x512）**，同时验证图像是没参与过训练的，这点要保证。
@@ -189,7 +191,7 @@ opt.checkpoints_file = './checkpoints/simple_batch_32/epoch_100_psnr_23.721.pth'
 
 **MIT-Adobe FiveK**
 
-```json
+```txt
 @inproceedings{fivek,
 	author = "Vladimir Bychkovsky and Sylvain Paris and Eric Chan and Fr{\'e}do Durand",
 	title = "Learning Photographic Global Tonal Adjustment with a Database of Input / Output Image Pairs",
