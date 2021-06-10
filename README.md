@@ -24,11 +24,21 @@
 
 1. Python 3.7.9
 2. Pytorch 1.1.0
-3. opencv-python 4.4.0.46
-4. scikit-image 0.15.0
-5. ......
+3. Cuda 9.0.176
+4. opencv-python 4.4.0.46
+5. scikit-image 0.15.0
+6. ......
 
 安装所有工具包
+
+```shell
+conda create -n cuda_9.0_python3.7 python=3.7
+conda activate cuda_9.0_python3.7 
+conda install cudatoolkit=9.0 cudnn=7.6.5
+pip install -r requirements.txt 
+```
+
+
 
 ```shell
 pip install -r requirements.txt
@@ -95,7 +105,9 @@ opt.checkpoints_file = './checkpoints/simple_batch_16/epoch_48_psnr_23.677.pth'
 
 细节展示, 用高分辨率的图像
 
+![image-20210610160616339](image_for_md/image-20210610160616339.png)
 
+如上，处理高分辨率图像（分辨率2000x3008，以上图举例），求光照图时，先求得 256x256 大小的系数，然后联合双边网格上采样到 2000x3008。得到的结果显而易见，图像四周边缘区采样效果不好，但图像中间部分和整体地曝光还是恢复地不错。而且观察细节部分，没有明显地模糊或者人工痕迹，还是能接受的。
 
 
 

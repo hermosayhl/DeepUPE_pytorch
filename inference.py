@@ -41,7 +41,7 @@ opt.eps_value = 1e-4
 opt.save_extra = True
 opt.images_dir = "./sample_imgs"
 opt.result_dir = './sample_results'
-opt.checkpoints_file = './checkpoints/simple_batch_16/epoch_100_psnr_23.721.pth'
+opt.checkpoints_file = './checkpoints/simple_batch_16/epoch_48_psnr_23.677.pth'
 for l, r in vars(opt).items(): print(l, " : ", r)
 os.makedirs(opt.result_dir, exist_ok=True)
 assert os.path.exists(opt.checkpoints_file), "checkpoints_file {} doesn't exists !".format(opt.checkpoints_file)
