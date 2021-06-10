@@ -1,1 +1,5 @@
 readme.md
+*.pptx
+make.py
+high_resolution/make.py
+/sample_results_1.7.1/

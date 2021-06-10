@@ -11,7 +11,6 @@ import numpy
 import dill as pickle
 # torch
 import torch
-from torchvision import transforms
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 # self
@@ -38,8 +37,9 @@ opt.low_size = 256
 opt.full_size = 512
 opt.use_cuda = True
 opt.eps_value = 1e-4
-opt.save_extra = True
-opt.images_dir = "./sample_imgs"
+opt.save_extra = False
+# opt.images_dir = "./sample_imgs"
+opt.images_dir = "./high_resolution/input"
 opt.result_dir = './sample_results'
 opt.checkpoints_file = './checkpoints/simple_batch_16/epoch_48_psnr_23.677.pth'
 for l, r in vars(opt).items(): print(l, " : ", r)
